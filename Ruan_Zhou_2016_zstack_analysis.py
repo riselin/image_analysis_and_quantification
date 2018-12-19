@@ -1,7 +1,7 @@
 import os
 import traceback
 import numpy as np
-from PIL import Image
+from Pillow import Image
 from matplotlib import pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 from scipy import stats
