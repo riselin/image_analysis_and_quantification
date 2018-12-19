@@ -254,7 +254,7 @@ def gamma_stabilize_and_smooth(tiff_stack,
     bits = dtype2bits[current_image.dtype.name]
 
     if debug:
-        print np.max(current_image), np.min(current_image), np.median(current_image)
+        print(np.max(current_image), np.min(current_image), np.median(current_image))
         plt.hist(current_image.flatten(), 100)
         plt.show()
 
@@ -262,7 +262,7 @@ def gamma_stabilize_and_smooth(tiff_stack,
     stabilized[stabilized < alpha_clean*np.median(stabilized)] = 0
 
     if debug:
-        print np.max(current_image), np.min(current_image), np.median(current_image)
+        print(np.max(current_image), np.min(current_image), np.median(current_image))
         plt.hist(current_image.flatten(), 100)
         plt.show()
 
@@ -273,7 +273,7 @@ def gamma_stabilize_and_smooth(tiff_stack,
             stabilized[stabilized < 5*np.mean(stabilized)] = 0
 
     if debug:
-        print np.max(current_image), np.min(current_image), np.median(current_image)
+        print(np.max(current_image), np.min(current_image), np.median(current_image))
         plt.hist(current_image.flatten(), 100)
         plt.show()
 
@@ -628,8 +628,8 @@ def folder_structure_traversal(main_root, per_cell=False, mammalian=False):
     results_collector = []
 
     for current_location, sub_directories, files in os.walk(main_root):
-        print current_location
-        print '\t', files
+        print(current_location)
+        print('\t', files)
 
         if files:
             pair_channels_in_folder(current_location, files, replicas, mammalian=mammalian)
@@ -662,20 +662,20 @@ def pair_channels_in_folder(current_location, files, replicas, mammalian=False):
                 name_pattern = ' - '.join(prefix + img_codename[:-1])
 
             current_image = Image.open(os.path.join(current_location, img))
-            print '%s image was parsed, code: %s %s' % (img, name_pattern, color)
+            print('%s image was parsed, code: %s %s' % (img, name_pattern, color))
             replicas[name_pattern][color] = gamma_stabilize_and_smooth(current_image)
 
 
 def analyze_matched_stack(per_cell, replicas, results_collector):
     results_subcollector = []
     for name_pattern, (w1448, w2561) in replicas.iteritems():
-        print name_pattern
+        print(name_pattern)
         try:
             results_subcollector += analyze_gfp_mch_paired_stacks(name_pattern, w1448, w2561,
                                                                segment_out_ill=True,
                                                                per_cell=per_cell)
         except Exception as my_exception:
-            print traceback.print_exc(my_exception)
+            print(traceback.print_exc(my_exception))
             sucker_list.append(name_pattern)
     return results_subcollector
 
@@ -691,7 +691,7 @@ def dump_results_table(results_collector, fname):
 def table_post_processing(results_collector):
     stats_collector = []
 
-    print '\n Summary of the analysis:'
+    print('\n Summary of the analysis:')
 
     for line in results_collector:
         class_name, _time_stamps = classify(line[0])
@@ -703,7 +703,7 @@ def table_post_processing(results_collector):
         class_set_filter = stats_collector[:, 0] == class_name
         if any(class_set_filter):
             class_set = stats_collector[class_set_filter, :]
-            print class_name
+            print(class_name)
             final_stats_collector_x = []
             final_stats_collector_y = []
             final_stats_collector_e = []
@@ -715,7 +715,7 @@ def table_post_processing(results_collector):
                     mean = np.nanmean(time_stamp_set[:, 2].astype(np.float64))
                     err = np.nanstd(time_stamp_set[:, 2].astype(np.float64)) / \
                           np.sqrt(len(time_stamp_set[:, 2]))*1.96
-                    print '\t time: %s, mean: %s, err: %s' % (time_stamp, mean, err)
+                    print('\t time: %s, mean: %s, err: %s' % (time_stamp, mean, err))
                     final_stats_collector_x.append(time_stamps[time_stamp])
                     final_stats_collector_y.append(mean)
                     final_stats_collector_e.append(err)
@@ -745,5 +745,5 @@ def classify(naming_code):
 
 
 if __name__ == "__main__":
-    folder_structure_traversal("L:\\Users\\jerry\\Image\\ForAndrei\\07212016gdnhclhs",
+    folder_structure_traversal("/Users/riselAir/Documents/GitHub/image_analysis_and_quantification",
                                per_cell=True)
