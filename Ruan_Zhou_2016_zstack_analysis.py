@@ -37,7 +37,7 @@ from scipy.stats import t
 
 # Module-level user-changeable parameters parameters:
 scaling_factor = (1.0, 1.0, 3.5)
-mcc_cutoff = 0.05
+mcc_cutoff = 0.05 #mCherry channel = mcc
 
 # 0 is the protein of interest marker
 # 1 is the organelle of interest marker
@@ -61,7 +61,7 @@ time_stamps = {
     'rec90min': 90
 }
 
-time_stamp_coll = time_stamps.keys()
+time_stamp_coll = time_stamps.keys() #returns list of keys for time_stamps
 
 header = ['name pattern', 'GFP', 'mito marker', 'cross',
           'MCC mito in GFP %', 'MCC GFP in mito %',
@@ -81,7 +81,7 @@ def safe_dir_create(path):
         os.makedirs(path)
 
 
-safe_dir_create('verification_bank')
+safe_dir_create('verification_bank') #create folder, in a "safe" manner i.e. won't overwrite if already existing
 
 
 # DEBUG frame with rendering:
