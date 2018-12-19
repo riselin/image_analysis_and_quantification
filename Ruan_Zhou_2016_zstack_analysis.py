@@ -1,13 +1,13 @@
 import os
 import traceback
 import numpy as np
-from Pillow import Image
+from PIL import Image #install Pillow package, but keep "PIL" as name here!
 from matplotlib import pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 from scipy import stats
 from collections import defaultdict
 from csv import writer
-from skimage.segmentation import random_walker
+from skimage.segmentation import random_walker #install scikit-image package
 from skimage.morphology import closing
 from scipy import ndimage as ndi
 from skimage.morphology import watershed
@@ -668,7 +668,7 @@ def pair_channels_in_folder(current_location, files, replicas, mammalian=False):
 
 def analyze_matched_stack(per_cell, replicas, results_collector):
     results_subcollector = []
-    for name_pattern, (w1448, w2561) in replicas.iteritems():
+    for name_pattern, (w1448, w2561) in replicas.items():
         print(name_pattern)
         try:
             results_subcollector += analyze_gfp_mch_paired_stacks(name_pattern, w1448, w2561,
@@ -745,5 +745,5 @@ def classify(naming_code):
 
 
 if __name__ == "__main__":
-    folder_structure_traversal("/Users/riselAir/Documents/GitHub/image_analysis_and_quantification",
+    folder_structure_traversal("Z:\Desktop\Asim\FLUCSM",
                                per_cell=True)
